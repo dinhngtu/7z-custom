@@ -138,6 +138,7 @@ C_OBJS = \
   $O\Alloc.obj \
   $O\CpuArch.obj \
   $O\DllSecur.obj \
+  $O\Mitigations.obj \
   $O\Sort.obj \
   $O\Threads.obj \
 

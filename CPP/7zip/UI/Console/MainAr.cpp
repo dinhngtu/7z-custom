@@ -4,6 +4,7 @@
 
 #ifdef _WIN32
 #include "../../../../C/DllSecur.h"
+#include "../../../../C/Mitigations.h"
 #endif
 
 #include "../../../Common/MyException.h"
@@ -38,6 +39,8 @@ static const char * const kUserBreakMessage  = "Break signaled";
 static const char * const kMemoryExceptionMessage = "ERROR: Can't allocate required memory!";
 static const char * const kUnknownExceptionMessage = "Unknown Error";
 static const char * const kInternalExceptionMessage = "\n\nInternal Error #";
+static const char * const kMitigationErrorMessage = "Cannot enable security mitigations: ";
+static const char * const kNonGUIMitigationErrorMessage = "Cannot enable non-GUI security mitigations: ";
 
 static void FlushStreams()
 {
@@ -70,9 +73,14 @@ int MY_CDECL main
 
   NConsoleClose::CCtrlHandlerSetter ctrlHandlerSetter;
   int res = 0;
-  
+
   try
   {
+    if (!EnableMitigations() || !EnableChildProcessMitigation()) {
+      FlushStreams();
+      *g_ErrStream << kMitigationErrorMessage << NError::MyFormatMessage(GetLastError()) << endl;
+    }
+
     #ifdef _WIN32
     My_SetDefaultDllDirectories();
     #endif

@@ -4,6 +4,7 @@
 
 #ifdef _WIN32
 #include "../../../../C/DllSecur.h"
+#include "../../../../C/Mitigations.h"
 #endif
 
 #include "../../../Common/MyWindows.h"
@@ -141,7 +142,7 @@ static int Main2()
   codecs->CaseSensitive = options.CaseSensitive;
   ThrowException_if_Error(codecs->Load());
   Codecs_AddHashArcHandler(codecs);
- 
+
   #ifdef EXTERNAL_CODECS
   {
     g_ExternalCodecs_Ptr = &__externalCodecs;
@@ -151,15 +152,15 @@ static int Main2()
     {
       MessageBoxW(0, s, L"7-Zip", MB_ICONERROR);
     }
-  
+
   }
   #endif
 
   const bool isExtractGroupCommand = options.Command.IsFromExtractGroup();
-  
+
   if (codecs->Formats.Size() == 0 &&
         (isExtractGroupCommand
-        
+
         || options.Command.IsFromUpdateGroup()))
   {
     #ifdef EXTERNAL_CODECS
@@ -172,7 +173,7 @@ static int Main2()
     #endif
     throw kNoFormats;
   }
-  
+
   CObjectVector<COpenType> formatIndices;
   if (!ParseOpenTypes(*codecs, options.ArcType, formatIndices))
   {
@@ -201,7 +202,7 @@ static int Main2()
       || options.Command.CommandType == NCommandType::kBenchmark)
     ThrowException_if_Error(__externalCodecs.Load());
   #endif
-  
+
   if (options.Command.CommandType == NCommandType::kBenchmark)
   {
     HRESULT res = Benchmark(
@@ -250,7 +251,7 @@ static int Main2()
     #ifndef _SFX
     CHashBundle hb;
     CHashBundle *hb_ptr = NULL;
-    
+
     if (!options.HashMethods.IsEmpty())
     {
       hb_ptr = &hb;
@@ -390,10 +391,13 @@ int APIENTRY WinMain(HINSTANCE  hInstance, HINSTANCE /* hPrevInstance */,
   /* lpCmdLine */, int /* nCmdShow */)
 {
   g_hInstance = hInstance;
-  
+
   #ifdef _WIN32
   NT_CHECK
   #endif
+
+  if (!EnableMitigations() || !EnableChildProcessMitigation())
+    ErrorMessage("Cannot enable security mitigations");
 
   InitCommonControls();
 

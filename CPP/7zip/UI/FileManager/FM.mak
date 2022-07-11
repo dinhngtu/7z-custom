@@ -89,6 +89,7 @@ WIN_OBJS = $(WIN_OBJS) \
 
 C_OBJS = $(C_OBJS) \
   $O\DllSecur.obj \
+  $O\Mitigations.obj \
 
 AGENT_OBJS = \
   $O\Agent.obj \

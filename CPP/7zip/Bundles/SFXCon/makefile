@@ -117,6 +117,7 @@ C_OBJS = \
   $O\CpuArch.obj \
   $O\Delta.obj \
   $O\DllSecur.obj \
+  $O\Mitigations.obj \
   $O\Lzma2Dec.obj \
   $O\Lzma2DecMt.obj \
   $O\LzmaDec.obj \

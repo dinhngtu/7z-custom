@@ -129,7 +129,7 @@ CRYPTO_OBJS = \
   $O\7zAes.obj \
   $O\7zAesRegister.obj \
   $O\MyAes.obj \
-  
+
 C_OBJS = \
   $O\Alloc.obj \
   $O\Bcj2.obj \
@@ -139,6 +139,7 @@ C_OBJS = \
   $O\CpuArch.obj \
   $O\Delta.obj \
   $O\DllSecur.obj \
+  $O\Mitigations.obj \
   $O\Lzma2Dec.obj \
   $O\Lzma2DecMt.obj \
   $O\LzmaDec.obj \
