@@ -2,7 +2,7 @@
 setlocal EnableExtensions EnableDelayedExpansion
 pushd "%~dp0"
 set "Build_Root=%~dp0"
-set version=7z2200
+set version=7z2201
 set "_7z=C:\Program Files\7-Zip\7z.exe"
 
 :Build_x64
